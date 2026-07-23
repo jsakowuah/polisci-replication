@@ -1,6 +1,6 @@
 # Political Science Replication Index
 
-A searchable, tagged index of political science replication packages, built from six flagship
+A searchable, tagged index of political science replication packages, built from sixteen flagship
 journals' Harvard Dataverse collections. Auto-refreshed monthly via GitHub Actions and published
 as a static site (see `docs/`).
 
@@ -19,6 +19,16 @@ full-text/faceted search.
 | British Journal of Political Science | BJPS | [`BJPolS`](https://dataverse.harvard.edu/dataverse/BJPolS) |
 | Political Science Research and Methods | PSRM | [`PSRM`](https://dataverse.harvard.edu/dataverse/PSRM) |
 | World Politics | WP | [`world-politics`](https://dataverse.harvard.edu/dataverse/world-politics) |
+| International Organization | IO | [`IOJ`](https://dataverse.harvard.edu/dataverse/IOJ) |
+| International Studies Quarterly | ISQ | [`isq`](https://dataverse.harvard.edu/dataverse/isq) |
+| Comparative Political Studies | CPS | [`cps`](https://dataverse.harvard.edu/dataverse/cps) |
+| Legislative Studies Quarterly | LSQ | [`lsq`](https://dataverse.harvard.edu/dataverse/lsq) |
+| Political Behavior | POLB | [`polbehavior`](https://dataverse.harvard.edu/dataverse/polbehavior) |
+| Political Analysis | PAN | [`pan`](https://dataverse.harvard.edu/dataverse/pan) |
+| Public Opinion Quarterly | POQ | [`poq`](https://dataverse.harvard.edu/dataverse/poq) |
+| Journal of Experimental Political Science | JEPS | [`xps`](https://dataverse.harvard.edu/dataverse/xps) |
+| PS: Political Science & Politics | PS | [`ps`](https://dataverse.harvard.edu/dataverse/ps) |
+| Perspectives on Politics | PoP | [`perspectives`](https://dataverse.harvard.edu/dataverse/perspectives) |
 
 ## Methodology
 
