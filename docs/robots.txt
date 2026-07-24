@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jsakowuah.github.io/polisci-replication/sitemap.xml
