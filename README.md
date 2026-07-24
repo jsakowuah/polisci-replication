@@ -49,6 +49,16 @@ of replication policies across a broader set of journals, including several not 
 | Security Studies | SS | [`securitystudies`](https://dataverse.harvard.edu/dataverse/securitystudies) |
 | State Politics & Policy Quarterly | SPPQ | [`sppq`](https://dataverse.harvard.edu/dataverse/sppq) |
 
+### Journals without a crawlable collection
+
+These don't publish to a dedicated Harvard Dataverse collection, so nothing here can index or
+search them — they're link-outs only, same as [poliscidata.com](https://www.poliscidata.com/pages/journalReplicationData.php):
+
+| Journal | Replication data |
+|---|---|
+| Journal of Conflict Resolution | linked per-article from the [table of contents](https://journals.sagepub.com/home/jcr) |
+| Journal of Peace Research | [PRIO's dataset page](https://www.prio.org/JPR/Datasets/) |
+
 ## Methodology
 
 **Fetching**: `scripts/fetch_dataverse.R` crawls each journal's Dataverse collection via the public
