@@ -3,9 +3,12 @@
 On this webpage, I have provided a searchable, tagged index of political science replication packages, built from flagship political science
 journals' Harvard Dataverse collections. This page is auto-refreshed monthly to provide you with up-to-date replication datasets. 
 
-Harvard Dataverse hosts thousands of replication packages for political science articles. Still, there's no way to search across journals by method (survey experiment, regression discontinuity,
-panel data...) or browse by data type. This project fills that gap with a single static index and
-full-text/faceted search.
+Harvard Dataverse hosts thousands of replication packages for political science articles, but its
+own interface doesn't support browsing across journals by method (survey experiment, regression
+discontinuity, panel data...) or by data type. This project indexes flagship journals' collections
+into a single static page with full-text/faceted search. (For a curated, non-searchable directory
+of replication policies across a broader set of journals, including several not indexed here, see
+[poliscidata.com's list](https://www.poliscidata.com/pages/journalReplicationData.php).)
 
 ## Journals covered
 
@@ -27,6 +30,24 @@ full-text/faceted search.
 | Journal of Experimental Political Science | JEPS | [`xps`](https://dataverse.harvard.edu/dataverse/xps) |
 | PS: Political Science & Politics | PS | [`ps`](https://dataverse.harvard.edu/dataverse/ps) |
 | Perspectives on Politics | PoP | [`perspectives`](https://dataverse.harvard.edu/dataverse/perspectives) |
+| Brazilian Political Science Review | BPSR | [`bpsr`](https://dataverse.harvard.edu/dataverse/bpsr) |
+| Revista DADOS | DADOS | [`revistadados`](https://dataverse.harvard.edu/dataverse/revistadados) |
+| Foreign Policy Analysis | FPA | [`FPA`](https://dataverse.harvard.edu/dataverse/FPA) |
+| International Interactions | II | [`interact`](https://dataverse.harvard.edu/dataverse/interact) |
+| International Security | IS | [`isec`](https://dataverse.harvard.edu/dataverse/isec) |
+| Italian Political Science Review | IPSR | [`ipsr-risp`](https://dataverse.harvard.edu/dataverse/ipsr-risp) |
+| Japanese Journal of Political Science | JJPS | [`JJPS`](https://dataverse.harvard.edu/dataverse/JJPS) |
+| Journal of Behavioral Public Administration | JBPA | [`JBPA`](https://dataverse.harvard.edu/dataverse/JBPA) |
+| Journal of Human Rights | JHR | [`jhr`](https://dataverse.harvard.edu/dataverse/jhr) |
+| Journal of Information Technology & Politics | JITP | [`jitp`](https://dataverse.harvard.edu/dataverse/jitp) |
+| Journal of Law and Courts | JLC | [`jlc`](https://dataverse.harvard.edu/dataverse/jlc) |
+| Journal of Public Policy | JPP | [`JPublicPolicy`](https://dataverse.harvard.edu/dataverse/JPublicPolicy) |
+| Latin American Politics and Society | LAPS | [`LAPS`](https://dataverse.harvard.edu/dataverse/LAPS) |
+| Public Administration | PA | [`pa`](https://dataverse.harvard.edu/dataverse/pa) |
+| Public Administration Review | PAR | [`PAR`](https://dataverse.harvard.edu/dataverse/PAR) |
+| Research & Politics | RP | [`researchandpolitics`](https://dataverse.harvard.edu/dataverse/researchandpolitics) |
+| Security Studies | SS | [`securitystudies`](https://dataverse.harvard.edu/dataverse/securitystudies) |
+| State Politics & Policy Quarterly | SPPQ | [`sppq`](https://dataverse.harvard.edu/dataverse/sppq) |
 
 ## Methodology
 
