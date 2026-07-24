@@ -13,6 +13,7 @@ async function init() {
   const res = await fetch("data/index.json");
   const payload = await res.json();
   state.records = payload.records;
+  state.journals = payload.journals || [];
 
   el("last-refreshed").textContent = `Index last refreshed: ${formatDate(payload.generated_at)}`;
 
@@ -22,9 +23,11 @@ async function init() {
     ignoreLocation: true,
   });
 
-  buildFacet("facet-journal", "journal_short", collectValues(state.records, "journal_short"));
+  const journalNames = new Map(state.journals.map((j) => [j.short, j.name]));
+  buildFacet("facet-journal", "journal_short", collectValues(state.records, "journal_short"), journalNames);
   buildFacet("facet-method", "method_tags", collectValues(state.records, "method_tags", true));
   buildFacet("facet-data_type", "data_type_tags", collectValues(state.records, "data_type_tags", true));
+  renderJournalsLegend(state.journals);
 
   el("search-box").addEventListener("input", (e) => {
     state.query = e.target.value.trim();
@@ -46,12 +49,15 @@ function collectValues(records, field, isArray = false) {
   return [...counts.entries()].sort((a, b) => b[1] - a[1]);
 }
 
-function buildFacet(containerId, field, valuesWithCounts) {
+function buildFacet(containerId, field, valuesWithCounts, labelMap = null) {
   const container = el(containerId);
   container.innerHTML = "";
   for (const [value, count] of valuesWithCounts) {
     const chip = document.createElement("label");
     chip.className = "facet-chip";
+    if (labelMap && labelMap.has(value)) {
+      chip.title = labelMap.get(value);
+    }
     chip.innerHTML = `<input type="checkbox" value="${escapeHtml(value)}" /> ${escapeHtml(value)} (${count})`;
     const checkbox = chip.querySelector("input");
     checkbox.addEventListener("change", () => {
@@ -67,6 +73,18 @@ function buildFacet(containerId, field, valuesWithCounts) {
     });
     container.appendChild(chip);
   }
+}
+
+function renderJournalsLegend(journals) {
+  const container = el("journals-legend-list");
+  const countEl = el("journals-legend-count");
+  if (!container) return;
+
+  const sorted = [...journals].sort((a, b) => a.short.localeCompare(b.short));
+  if (countEl) countEl.textContent = sorted.length;
+  container.innerHTML = sorted
+    .map((j) => `<div class="journal-entry"><strong>${escapeHtml(j.short)}</strong> ${escapeHtml(j.name)}</div>`)
+    .join("");
 }
 
 function matchesFacets(record) {

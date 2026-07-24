@@ -64,6 +64,42 @@ header h1 {
   color: var(--fg);
 }
 
+.journals-legend {
+  margin: 1.25rem 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card-bg);
+  padding: 0.9rem 1.1rem;
+}
+
+.journals-legend summary {
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.journals-legend summary:hover {
+  color: var(--accent);
+}
+
+.journals-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 0.3rem 1.2rem;
+  margin-top: 0.9rem;
+  font-size: 0.85rem;
+}
+
+.journal-entry strong {
+  color: var(--accent);
+  margin-right: 0.35rem;
+}
+
+.journal-entry {
+  color: var(--muted);
+}
+
 .controls {
   margin: 1.5rem 0;
 }

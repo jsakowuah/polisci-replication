@@ -70,9 +70,18 @@ records <- pmap(
   }
 )
 
+journals_config <- read_journals_config()
+journal_list <- pmap(
+  list(journals_config$journal_short, journals_config$journal_name),
+  function(short, name) list(short = short, name = name)
+)
+
 payload <- list(
   generated_at = format(Sys.time(), "%Y-%m-%dT%H:%M:%SZ", tz = "UTC"),
   methodology_version = "1",
+  # Full journal names, keyed by short code, so docs/assets/app.js can render
+  # a legend and facet tooltips without a hand-maintained copy of this list.
+  journals = journal_list,
   records = records
 )
 
