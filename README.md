@@ -1,8 +1,7 @@
 # Political Science Replication Index
 
-A searchable, tagged index of political science replication packages, built from sixteen flagship
-journals' Harvard Dataverse collections. Auto-refreshed monthly via GitHub Actions and published
-as a static site (see `docs/`).
+On this webpage, I have provided a searchable, tagged index of political science replication packages, built from flagship political science
+journals' Harvard Dataverse collections. This page is auto-refreshed monthly to provide you with up-to-date replication datasets. 
 
 Harvard Dataverse hosts thousands of replication packages for political science articles, but
 there's no way to search across journals by method (survey experiment, regression discontinuity,
