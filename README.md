@@ -43,10 +43,10 @@ volume).
 each dataset's title, abstract, and author-supplied keywords, via case-insensitive regex matching.
 A dataset can get zero, one, or several tags in each category.
 
-**Tags are a search aid, not ground truth.** A keyword classifier will miss paraphrased methods
-(a paper that never uses the phrase "regression discontinuity" but clearly runs one) and can
-over-match on common words (e.g. "experiment" appearing in an unrelated sentence). Treat tags as a
-way to narrow a search, and verify by reading the abstract or the dataset itself.
+A keyword classifier will miss paraphrased methods (a paper that never uses the phrase "regression
+discontinuity" but clearly runs one) and can over-match on common words (e.g. "experiment"
+appearing in an unrelated sentence). Treat tags as a way to narrow a search, and verify by reading
+the abstract or the dataset itself.
 
 **Data quality note**: the `related_publication_citation` field is a best-effort citation string
 supplied by the depositor, not a structured field — in practice it varies wildly, from a clean
