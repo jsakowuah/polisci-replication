@@ -40,7 +40,11 @@ fetch_journal_datasets <- function(journal_name, journal_short, alias) {
 
   all_rows <- list(map_dfr(first_page$data$items, extract_item, journal_name = journal_name, journal_short = journal_short))
 
-  starts <- seq(PAGE_SIZE, total_count - 1, by = PAGE_SIZE)
+  # total_count <= PAGE_SIZE means the first page already has everything;
+  # seq() errors ("wrong sign in 'by' argument") if asked to build a
+  # descending range with a positive step, which is what total_count - 1 <
+  # PAGE_SIZE produces.
+  starts <- if (total_count > PAGE_SIZE) seq(PAGE_SIZE, total_count - 1, by = PAGE_SIZE) else integer(0)
   for (s in starts) {
     polite_sleep(0.4)
     page <- dataverse_get(SEARCH_URL, list(
