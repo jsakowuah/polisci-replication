@@ -48,9 +48,9 @@ records <- pmap(
   list(
     tagged$journal_short, tagged$title, tagged$doi, tagged$url,
     tagged$authors, tagged$year, tagged$description,
-    tagged$method_tags, tagged$data_type_tags
+    tagged$method_tags, tagged$data_type_tags, tagged$keywords_raw
   ),
-  function(journal_short, title, doi, url, authors, year, description, method_tags, data_type_tags) {
+  function(journal_short, title, doi, url, authors, year, description, method_tags, data_type_tags, keywords_raw) {
     desc <- if (is.na(description)) "" else description
     list(
       journal_short = journal_short,
@@ -65,7 +65,8 @@ records <- pmap(
       year = year,
       description = str_trunc(desc, DESCRIPTION_TRUNCATE_CHARS),
       method_tags = I(split_tags(method_tags)),
-      data_type_tags = I(split_tags(data_type_tags))
+      data_type_tags = I(split_tags(data_type_tags)),
+      keywords = I(if (is.na(keywords_raw)) character(0) else str_split(keywords_raw, "; ")[[1]])
     )
   }
 )

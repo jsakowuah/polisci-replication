@@ -1,11 +1,11 @@
 # Political Science Replication Index
 
-On this webpage, I have provided a searchable, tagged index of political science replication packages, built from flagship political science
-journals' Harvard Dataverse collections. This page is auto-refreshed monthly to provide you with up-to-date replication datasets. 
+On this webpage, I have provided a searchable, tagged index of political science replication packages, built from political science
+and public affairs journals with dedicated Harvard Dataverse collections. This page is auto-refreshed monthly to provide you with up-to-date replication datasets. 
 
 Harvard Dataverse hosts thousands of replication packages for political science articles, but its
 own interface doesn't support browsing across journals by method (survey experiment, regression
-discontinuity, panel data...) or by data type. This project indexes flagship journals' collections
+discontinuity, panel data...) or by data type. This project indexes these journals' collections
 into a single static page with full-text/faceted search. (For a curated, non-searchable directory
 of replication policies across a broader set of journals, including several not indexed here, see
 [poliscidata.com's list](https://www.poliscidata.com/pages/journalReplicationData.php).)
