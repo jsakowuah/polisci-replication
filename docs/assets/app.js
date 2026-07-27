@@ -58,6 +58,11 @@ async function init() {
   buildFacet("facet-data_type", "data_type_tags", collectValues(state.records, "data_type_tags", true));
   renderJournalsLegend(state.journals);
 
+  // No max: next year's refresh will have records past dataYearMax, and the
+  // stepper shouldn't need a code change to reach them. Floor is real, though.
+  el("year-from").min = state.dataYearMin;
+  el("year-to").min = state.dataYearMin;
+
   applyStateFromUrl();
   syncControlsToState();
 
@@ -79,7 +84,7 @@ async function init() {
   });
 
   el("year-from").addEventListener("change", (e) => {
-    state.yearMin = e.target.value ? Number(e.target.value) : state.dataYearMin;
+    state.yearMin = e.target.value ? Math.max(state.dataYearMin, Number(e.target.value)) : state.dataYearMin;
     state.visibleCount = PAGE_SIZE;
     syncControlsToState();
     render();
@@ -87,7 +92,7 @@ async function init() {
   });
 
   el("year-to").addEventListener("change", (e) => {
-    state.yearMax = e.target.value ? Number(e.target.value) : state.dataYearMax;
+    state.yearMax = e.target.value ? Math.max(state.dataYearMin, Number(e.target.value)) : state.dataYearMax;
     state.visibleCount = PAGE_SIZE;
     syncControlsToState();
     render();
@@ -297,8 +302,8 @@ function syncUrlFromState() {
 function applyStateFromUrl() {
   const params = new URLSearchParams(window.location.search);
   state.query = params.get("q") || "";
-  state.yearMin = params.has("from") ? Number(params.get("from")) : state.dataYearMin;
-  state.yearMax = params.has("to") ? Number(params.get("to")) : state.dataYearMax;
+  state.yearMin = params.has("from") ? Math.max(state.dataYearMin, Number(params.get("from"))) : state.dataYearMin;
+  state.yearMax = params.has("to") ? Math.max(state.dataYearMin, Number(params.get("to"))) : state.dataYearMax;
   state.sort = params.get("sort") || "relevance";
 
   for (const key of Object.keys(state.activeFacets)) state.activeFacets[key].clear();
