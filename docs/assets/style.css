@@ -258,9 +258,14 @@ header h1 {
 .facet-options {
   display: flex;
   flex-wrap: wrap;
+  align-content: flex-start;
   gap: 0.35rem;
   max-height: 9rem;
   overflow-y: auto;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.5rem;
 }
 
 .facet-chip {
