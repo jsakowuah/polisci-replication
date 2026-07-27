@@ -58,9 +58,6 @@ async function init() {
   buildFacet("facet-data_type", "data_type_tags", collectValues(state.records, "data_type_tags", true));
   renderJournalsLegend(state.journals);
 
-  el("year-from").placeholder = String(state.dataYearMin);
-  el("year-to").placeholder = String(state.dataYearMax);
-
   applyStateFromUrl();
   syncControlsToState();
 
@@ -82,23 +79,25 @@ async function init() {
   });
 
   el("year-from").addEventListener("change", (e) => {
-    state.yearMin = e.target.value ? Number(e.target.value) : null;
+    state.yearMin = e.target.value ? Number(e.target.value) : state.dataYearMin;
     state.visibleCount = PAGE_SIZE;
+    syncControlsToState();
     render();
     syncUrlFromState();
   });
 
   el("year-to").addEventListener("change", (e) => {
-    state.yearMax = e.target.value ? Number(e.target.value) : null;
+    state.yearMax = e.target.value ? Number(e.target.value) : state.dataYearMax;
     state.visibleCount = PAGE_SIZE;
+    syncControlsToState();
     render();
     syncUrlFromState();
   });
 
   el("clear-filters").addEventListener("click", () => {
     state.query = "";
-    state.yearMin = null;
-    state.yearMax = null;
+    state.yearMin = state.dataYearMin;
+    state.yearMax = state.dataYearMax;
     state.sort = "relevance";
     state.visibleCount = PAGE_SIZE;
     for (const set of Object.values(state.activeFacets)) set.clear();
@@ -286,8 +285,8 @@ function syncUrlFromState() {
   if (state.activeFacets.journal_short.size) params.set("journal", [...state.activeFacets.journal_short].join(","));
   if (state.activeFacets.method_tags.size) params.set("method", [...state.activeFacets.method_tags].join(","));
   if (state.activeFacets.data_type_tags.size) params.set("data_type", [...state.activeFacets.data_type_tags].join(","));
-  if (state.yearMin != null) params.set("from", String(state.yearMin));
-  if (state.yearMax != null) params.set("to", String(state.yearMax));
+  if (state.yearMin !== state.dataYearMin) params.set("from", String(state.yearMin));
+  if (state.yearMax !== state.dataYearMax) params.set("to", String(state.yearMax));
   if (state.sort !== "relevance") params.set("sort", state.sort);
 
   const qs = params.toString();
@@ -298,8 +297,8 @@ function syncUrlFromState() {
 function applyStateFromUrl() {
   const params = new URLSearchParams(window.location.search);
   state.query = params.get("q") || "";
-  state.yearMin = params.has("from") ? Number(params.get("from")) : null;
-  state.yearMax = params.has("to") ? Number(params.get("to")) : null;
+  state.yearMin = params.has("from") ? Number(params.get("from")) : state.dataYearMin;
+  state.yearMax = params.has("to") ? Number(params.get("to")) : state.dataYearMax;
   state.sort = params.get("sort") || "relevance";
 
   for (const key of Object.keys(state.activeFacets)) state.activeFacets[key].clear();
@@ -319,8 +318,8 @@ function applyFacetParam(params, paramName, field) {
 function syncControlsToState() {
   el("search-box").value = state.query;
   el("sort-select").value = state.sort;
-  el("year-from").value = state.yearMin ?? "";
-  el("year-to").value = state.yearMax ?? "";
+  el("year-from").value = state.yearMin;
+  el("year-to").value = state.yearMax;
 
   for (const containerId of ["facet-journal", "facet-method", "facet-data_type"]) {
     const container = el(containerId);
