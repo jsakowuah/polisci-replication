@@ -146,19 +146,43 @@ header h1 {
   margin: 1.5rem 0;
 }
 
+.search-wrap {
+  position: relative;
+}
+
+.search-icon {
+  position: absolute;
+  left: 0.95rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+  pointer-events: none;
+}
+
 #search-box {
   width: 100%;
-  padding: 0.6rem 0.8rem;
-  font-size: 1rem;
-  border: 1px solid var(--border);
-  border-radius: 8px;
+  padding: 0.85rem 1.1rem 0.85rem 2.7rem;
+  font-size: 1.05rem;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
   background: var(--bg);
   color: var(--fg);
+  box-shadow: 0 1px 3px color-mix(in srgb, var(--fg) 8%, transparent);
+}
+
+#search-box::placeholder {
+  color: var(--muted);
+}
+
+#search-box:hover {
+  border-color: color-mix(in srgb, var(--accent) 50%, var(--border));
 }
 
 #search-box:focus {
+  border-color: var(--accent);
   outline: 2px solid var(--accent);
-  outline-offset: 1px;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 18%, transparent);
 }
 
 .controls-row {

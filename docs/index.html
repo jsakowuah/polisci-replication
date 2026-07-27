@@ -77,13 +77,19 @@
 
   <section class="controls">
     <label for="search-box" class="visually-hidden">Search replication packages</label>
-    <input
-      id="search-box"
-      type="search"
-      placeholder="Search titles, abstracts, authors, keywords, or DOI…"
-      autocomplete="off"
-      aria-describedby="search-help"
-    />
+    <div class="search-wrap">
+      <svg class="search-icon" width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+        <circle cx="7" cy="7" r="5.5" />
+        <path d="M11.2 11.2 15 15" stroke-linecap="round" />
+      </svg>
+      <input
+        id="search-box"
+        type="search"
+        placeholder="Search titles, abstracts, authors, keywords, or DOI…"
+        autocomplete="off"
+        aria-describedby="search-help"
+      />
+    </div>
     <p id="search-help" class="visually-hidden">Search by title, abstract, author, keyword, or DOI.</p>
 
     <div class="controls-row">
