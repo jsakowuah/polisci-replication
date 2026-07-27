@@ -4,9 +4,7 @@ method,Difference-in-Differences,difference-in-differences|diff-in-diff
 method,Instrumental Variable,instrumental variable
 method,Survey Experiment,survey experiment|conjoint experiment|vignette experiment
 method,Field Experiment,field experiment|randomized controlled trial|\bRCT\b
-method,Panel Data,panel data|fixed effects
 method,Formal Model / Game Theory,formal model|game-theoretic|game theory
-method,Text as Data / NLP,text as data|natural language processing|topic model|sentiment analysis|word embedding
 method,Machine Learning,machine learning|random forest|\bLASSO\b
 method,Network Analysis,network analysis|social network
 method,Multilevel / Hierarchical Model,multilevel model|hierarchical model|mixed effects
@@ -15,7 +13,11 @@ method,Meta-Analysis,meta-analysis
 method,Case Study / Process Tracing,case study|process tracing
 method,Survival / Duration Model,survival analysis|duration model|event history
 method,Spatial Analysis,spatial econometrics|spatial model|\bGIS\b
+method,Qualitative Comparative Analysis,qualitative comparative analysis|\bQCA\b|fsQCA|csQCA
+method,Structural Equation Modeling,structural equation model|\bSEM\b
 data_type,Survey Data,survey data
+data_type,Panel Data,panel data|fixed effects
+data_type,Text as Data / NLP,text as data|natural language processing|topic model|sentiment analysis|word embedding
 data_type,Experimental Data,\bexperiment\b
 data_type,Administrative / Government Records,administrative data|government records|\bcensus\b
 data_type,Elite / Legislator Data,legislat|\belite\b|congressional|parliament
