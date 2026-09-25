@@ -90,6 +90,38 @@ dir.create("docs/data", recursive = TRUE, showWarnings = FALSE)
 write_json(payload, "docs/data/index.json", auto_unbox = TRUE, null = "null")
 message(sprintf("Wrote %d records to docs/data/index.json", length(records)))
 
+# --- New-dataset detection (drives email notices) ---
+# data/seen_dois.csv is an append-only ledger of every DOI ever indexed. It's
+# kept separately from replication_index.csv so a record that drops out of one
+# crawl (a transient API gap) and reappears in the next isn't announced twice.
+SEEN_LEDGER <- "data/seen_dois.csv"
+run_date <- format(Sys.time(), "%Y-%m-%d", tz = "UTC")
+
+seen <- if (file.exists(SEEN_LEDGER)) {
+  read_csv(SEEN_LEDGER, col_types = "cc")
+} else {
+  # First run with notices: seed from this crawl so the whole back catalogue
+  # isn't announced as new. Notices start with the following run.
+  message(sprintf("%s not found; seeding it (no notices this run)", SEEN_LEDGER))
+  tibble(doi = tagged$doi, first_seen = run_date)
+}
+
+is_new <- !is.na(tagged$doi) & !(tagged$doi %in% seen$doi)
+new_records <- records[is_new]
+
+seen <- bind_rows(seen, tibble(doi = tagged$doi[is_new], first_seen = run_date)) |>
+  distinct(doi, .keep_all = TRUE)
+write_csv(seen, SEEN_LEDGER)
+
+new_payload <- list(
+  # batch_id lets the notifier refuse to send the same batch twice on a retry
+  batch_id = payload$generated_at,
+  generated_at = payload$generated_at,
+  records = new_records
+)
+write_json(new_payload, "docs/data/new_datasets.json", auto_unbox = TRUE, null = "null")
+message(sprintf("Wrote %d new records to docs/data/new_datasets.json", length(new_records)))
+
 meta <- list(
   generated_at = payload$generated_at,
   journals = unique(tagged$journal_short),

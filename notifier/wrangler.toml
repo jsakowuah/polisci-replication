@@ -1,0 +1,29 @@
+name = "polisci-replication-notifier"
+main = "src/worker.js"
+compatibility_date = "2026-09-01"
+
+# No request logging: the Worker never writes emails to logs, and observability
+# is left off so Cloudflare doesn't retain request details either.
+[observability]
+enabled = false
+
+[vars]
+SITE_URL = "https://jsakowuah.github.io/polisci-replication/"
+ALLOWED_ORIGIN = "https://jsakowuah.github.io"
+# Must be on a domain verified in Resend.
+FROM_ADDRESS = "Polisci Replication Index <notices@alerts.josephsakowuah.com>"
+
+# Secrets (set with `npx wrangler secret put <NAME>`, never committed):
+#   RESEND_API_KEY  - Resend API key with sending access
+#   NOTIFY_TOKEN    - shared secret the GitHub Action sends to /notify
+
+[[d1_databases]]
+binding = "DB"
+database_name = "polisci-replication-subscribers"
+database_id = "215eaae8-b133-441b-9ee3-be0d401f17b3"
+
+# Global (not per-IP) cap on sign-up attempts, so no visitor data is used.
+[[ratelimits]]
+name = "SUBSCRIBE_LIMITER"
+namespace_id = "1001"
+simple = { limit = 30, period = 60 }

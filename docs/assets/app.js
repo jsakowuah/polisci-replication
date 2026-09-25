@@ -1,5 +1,8 @@
 const PAGE_SIZE = 30;
 const SEARCH_DEBOUNCE_MS = 200;
+// Base URL of the Cloudflare Worker in notifier/. The alerts button stays
+// hidden while this is empty.
+const NOTIFIER_URL = "https://polisci-replication-notifier.siawjoe.workers.dev";
 
 const state = {
   records: [],
@@ -122,7 +125,76 @@ async function init() {
     render();
   });
 
+  initAlerts();
   render();
+}
+
+// --- Email alerts (subscribe to the current filters) ---
+
+function currentAlertFilters() {
+  return {
+    journal: [...state.activeFacets.journal_short],
+    method: [...state.activeFacets.method_tags],
+    data_type: [...state.activeFacets.data_type_tags],
+    q: state.query,
+  };
+}
+
+function describeAlertFilters(f) {
+  const parts = [];
+  if (f.journal.length) parts.push(`Journal: ${f.journal.join(" or ")}`);
+  if (f.method.length) parts.push(`Method: ${f.method.join(" or ")}`);
+  if (f.data_type.length) parts.push(`Data type: ${f.data_type.join(" or ")}`);
+  if (f.q) parts.push(`Text: "${f.q}"`);
+  return parts.length ? parts.join("; ") : "All new replication packages (no filters selected)";
+}
+
+function initAlerts() {
+  if (!NOTIFIER_URL) return;
+  const dialog = el("alerts-dialog");
+  const form = el("alerts-form");
+  const status = el("alerts-status");
+  const submit = el("alerts-submit");
+  el("open-alerts").hidden = false;
+
+  el("open-alerts").addEventListener("click", () => {
+    el("alerts-summary").textContent = describeAlertFilters(currentAlertFilters());
+    status.textContent = "";
+    status.className = "alerts-status";
+    submit.disabled = false;
+    dialog.showModal();
+    el("alerts-email").focus();
+  });
+  el("alerts-cancel").addEventListener("click", () => dialog.close());
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = el("alerts-email").value.trim();
+    if (!el("alerts-email").checkValidity() || !email) {
+      status.textContent = "Please enter a valid email address.";
+      status.className = "alerts-status error";
+      return;
+    }
+    submit.disabled = true;
+    status.textContent = "Sending…";
+    status.className = "alerts-status";
+    try {
+      const res = await fetch(`${NOTIFIER_URL}/subscribe`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, filters: currentAlertFilters(), website: el("alerts-website").value }),
+      });
+      const body = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(body.error || "Something went wrong. Please try again later.");
+      status.textContent = "Check your inbox for a confirmation link. Alerts start once you confirm.";
+      status.className = "alerts-status success";
+      el("alerts-email").value = "";
+    } catch (err) {
+      status.textContent = err.message;
+      status.className = "alerts-status error";
+      submit.disabled = false;
+    }
+  });
 }
 
 function renderStats(payload, years) {

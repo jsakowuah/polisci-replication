@@ -1,7 +1,7 @@
 # Political Science Replication Index
 
 On this webpage, I have provided a searchable, tagged index of political science replication packages, built from political science
-and public affairs journals with dedicated Harvard Dataverse collections. This page is auto-refreshed monthly to provide you with up-to-date replication datasets. 
+and public affairs journals with dedicated Harvard Dataverse collections. This page is auto-refreshed weekly to provide you with up-to-date replication datasets, and visitors can sign up to be emailed when new replication data matching their interests is posted. 
 
 Harvard Dataverse hosts thousands of replication packages for political science articles, but its
 own interface doesn't support browsing across journals by method (survey experiment, regression
@@ -66,7 +66,7 @@ search them — they're link-outs only, same as [poliscidata.com](https://www.po
 `subtree=<alias>`). The API caps `rows` at 10 per request regardless of what's requested, so the
 script paginates with `start` until it has walked the full collection. This is a full re-crawl on
 every run rather than an incremental fetch — simpler, and self-healing for edited or backfilled
-records, at the cost of a few hundred extra requests per month (not a meaningful cost at this
+records, at the cost of a few hundred extra requests per week (not a meaningful cost at this
 volume).
 
 **Tagging**: `scripts/tag_datasets.R` applies the keyword rules in `config/tag_rules.csv` against
@@ -98,11 +98,32 @@ scripts/
 data/
   raw/dataverse_datasets.csv  # untagged crawl output
   replication_index.csv       # canonical tidy output (tags as pipe-delimited strings)
+  seen_dois.csv               # append-only ledger of every DOI indexed + date first seen
   meta.json                   # last-run summary
 docs/                          # GitHub Pages source
   index.html, assets/app.js, assets/style.css
   data/index.json              # search payload consumed by the site (client-side Fuse.js search)
+  data/new_datasets.json       # records first seen in the latest run (drives email alerts)
+notifier/                      # Cloudflare Worker for email alerts (see notifier/README.md)
 ```
+
+## Email alerts
+
+Visitors can subscribe to their current search (journal, method, and data-type filters, plus
+optional search text) from the "Email me new matches" button. After each refresh, subscribers get
+one email listing newly indexed packages that match, and nothing if none match.
+
+- **New** means the DOI isn't in `data/seen_dois.csv`, i.e. the first run a package shows up in,
+  not its Dataverse publication date. A package that drops out of one crawl and comes back isn't
+  announced twice.
+- Matching mirrors the site's facets: values within a category are OR'd, categories are AND'd.
+  Search text is stricter than the site's fuzzy search, so every word has to appear in the title,
+  abstract, keywords, or authors.
+- **Privacy**: the only data stored is the email address and the chosen filters, in a Cloudflare
+  D1 database (never in this repo). Sign-up is double opt-in. Unconfirmed sign-ups are deleted
+  after 7 days, and unsubscribing deletes the address outright. There's no open or click tracking.
+
+Setup and operations are in [`notifier/README.md`](notifier/README.md).
 
 ## Adding a journal
 
@@ -119,7 +140,7 @@ No code changes needed.
 
 ## Refresh cadence
 
-The pipeline runs monthly via a scheduled GitHub Action (`.github/workflows/update-index.yml`),
+The pipeline runs weekly (Mondays) via a scheduled GitHub Action (`.github/workflows/update-index.yml`),
 plus on-demand via `workflow_dispatch`. Failures surface through GitHub's default Action-failure
 email — there's no separate alerting.
 

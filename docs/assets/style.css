@@ -481,3 +481,147 @@ footer {
   padding: 2rem 0;
   text-align: center;
 }
+
+/* --- Email alerts --- */
+
+.alerts-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.8rem;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--bg);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.alerts-btn:hover {
+  filter: brightness(1.1);
+}
+
+.alerts-dialog {
+  width: min(520px, calc(100vw - 2rem));
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.alerts-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.alerts-dialog h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.2rem;
+}
+
+.alerts-lede,
+.alerts-hint,
+.alerts-privacy {
+  color: var(--muted);
+  font-size: 0.88rem;
+  margin: 0 0 0.75rem;
+}
+
+.alerts-hint,
+.alerts-privacy {
+  font-size: 0.8rem;
+}
+
+.alerts-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.6rem 0.8rem;
+  margin-bottom: 0.5rem;
+  border-radius: 6px;
+  background: var(--chip-bg);
+  color: var(--chip-fg);
+  font-size: 0.9rem;
+}
+
+.alerts-filters-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.alerts-email-label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+}
+
+#alerts-email {
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  margin-bottom: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--fg);
+  font-size: 1rem;
+}
+
+#alerts-email:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.alerts-status {
+  min-height: 1.2em;
+  font-size: 0.88rem;
+  margin: 0 0 0.75rem;
+}
+
+.alerts-status.success {
+  color: #1f7a3a;
+}
+
+.alerts-status.error {
+  color: #b42318;
+}
+
+@media (prefers-color-scheme: dark) {
+  .alerts-status.success { color: #6fd08c; }
+  .alerts-status.error { color: #f59a8f; }
+}
+
+.alerts-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.alerts-primary,
+.alerts-secondary {
+  padding: 0.45rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.alerts-primary {
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: var(--bg);
+  font-weight: 600;
+}
+
+.alerts-primary:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.alerts-secondary {
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--fg);
+}

@@ -110,6 +110,10 @@
         <input id="year-to" type="number" inputmode="numeric" class="year-input" />
       </label>
       <button id="clear-filters" type="button" class="clear-filters-btn">Clear all filters</button>
+      <button id="open-alerts" type="button" class="alerts-btn" hidden>
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="1" y="3" width="14" height="10" rx="1.5"/><path d="M1.5 4l6.5 5 6.5-5"/></svg>
+        Email me new matches
+      </button>
     </div>
 
     <div class="facets">
@@ -161,8 +165,39 @@
     </section>
   </details>
 
+  <dialog id="alerts-dialog" class="alerts-dialog" aria-labelledby="alerts-title">
+    <form id="alerts-form" novalidate>
+      <h2 id="alerts-title">Get emailed about new replication data</h2>
+      <p class="alerts-lede">
+        After each weekly refresh, you'll get one email listing newly posted replication packages that
+        match these filters. If nothing new matches, you won't get an email.
+      </p>
+      <div class="alerts-filters">
+        <span class="alerts-filters-label">Your alert</span>
+        <span id="alerts-summary"></span>
+      </div>
+      <p class="alerts-hint">To change the alert, close this box, adjust the search or the journal, method, and data type filters, then reopen it.</p>
+
+      <label for="alerts-email" class="alerts-email-label">Email address</label>
+      <input id="alerts-email" type="email" required autocomplete="email" maxlength="254" />
+      <!-- Honeypot: hidden from people, filled in by bots -->
+      <input type="text" name="website" id="alerts-website" tabindex="-1" autocomplete="off" class="visually-hidden" aria-hidden="true" />
+
+      <p class="alerts-privacy">
+        We store only your email address and the filters above. Nothing else is recorded, and there's no
+        tracking. We'll send a confirmation link first. Every alert email has an unsubscribe link that
+        deletes your address.
+      </p>
+      <p id="alerts-status" class="alerts-status" role="status" aria-live="polite"></p>
+      <div class="alerts-actions">
+        <button type="button" id="alerts-cancel" class="alerts-secondary">Close</button>
+        <button type="submit" id="alerts-submit" class="alerts-primary">Subscribe</button>
+      </div>
+    </form>
+  </dialog>
+
   <footer>
-    <p class="footer-note">Full methodology in the repository README. Data refreshed monthly. MIT licensed.</p>
+    <p class="footer-note">Full methodology in the repository README. Data refreshed weekly. MIT licensed.</p>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>

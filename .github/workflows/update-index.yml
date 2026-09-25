@@ -2,7 +2,7 @@ name: Update replication index
 
 on:
   schedule:
-    - cron: "42 6 3 * *" # monthly, off round numbers to avoid scheduler pile-up
+    - cron: "42 6 * * 1" # weekly (Mondays), off round numbers to avoid scheduler pile-up
   workflow_dispatch: {}
 
 permissions:
@@ -39,3 +39,21 @@ jobs:
           git add data/ docs/data/
           git diff --cached --quiet || git commit -m "Automated index refresh: $(date -u +%Y-%m-%d)"
           git push
+
+      # Runs after the push so the links in the emails point at a site that
+      # already lists the new packages. The Worker skips addresses it has
+      # already emailed for this batch, so re-running a failed job is safe.
+      - name: Email subscribers about new datasets
+        env:
+          NOTIFIER_URL: ${{ vars.NOTIFIER_URL }}
+          NOTIFY_TOKEN: ${{ secrets.NOTIFY_TOKEN }}
+        run: |
+          if [ -z "$NOTIFIER_URL" ] || [ -z "$NOTIFY_TOKEN" ]; then
+            echo "NOTIFIER_URL or NOTIFY_TOKEN not configured; skipping notices."
+            exit 0
+          fi
+          curl --fail-with-body --silent --show-error \
+            -X POST "$NOTIFIER_URL/notify" \
+            -H "Authorization: Bearer $NOTIFY_TOKEN" \
+            -H "Content-Type: application/json" \
+            --data-binary @docs/data/new_datasets.json

@@ -3,3 +3,6 @@
 .Rproj.user
 *.Rproj
 .DS_Store
+.wrangler/
+node_modules/
+.dev.vars
